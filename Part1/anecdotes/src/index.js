@@ -22,7 +22,6 @@ const App = ({anecdotes}) => {
     let newVotes = {...votes}
     newVotes[selected] ? newVotes[selected] += 1 : newVotes[selected] = 1
     addVote(newVotes)
-    //setMostVoted(votes[getMostVoted()])
   }
 
   getMostVoted()
