@@ -1,28 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const Header = (props) => {
-  return (
-    <>
-    <h1>{props.curse}</h1>
-    </>
-  )
-}
-
-const Content = (props) => {
-  return (
-    props.parts.map(elem => <p>{elem.name} {elem.exercises}</p>)
-  )
-}
-
-const Total = (props) => {
-  return (
-    <>
-    <p>Number of excercises {props.parts.reduce((acc, obj) => acc+obj.exercises,0)}</p>
-    </>
-  )
-}
-
 const App = () => {
   const course = {
     name: 'Half Stack application development',
