@@ -1,10 +1,10 @@
 import Contact from "./Contact"
 
-const Contacts = ({ contacts }) => {
+const Contacts = ({ contacts, deletePerson }) => {
     if (contacts.length > 0) {
         return (
             <div>
-                {contacts.map(contact => <Contact key={contact.name} name={contact.name} number={contact.number} />)}
+                {contacts.map(contact => <Contact key={contact.name} person={contact} deletePerson={deletePerson} />)}
             </div>
         )
     }

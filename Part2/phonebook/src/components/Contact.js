@@ -1,7 +1,7 @@
 
-const Contact = ({ name, number }) => {
+const Contact = ({ person:{name, id, number}, deletePerson }) => {
     return (
-        <><p>{name} : {number}</p></>
+        <div><label>{name} : {number}</label> <button  id={id} onClick={(event)=> deletePerson(event.target.id)}>Delete</button> </div>
     )
 }
 

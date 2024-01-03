@@ -33,7 +33,7 @@
     {
       "content": "NDA",
       "date": "2024-01-02T00:42:53.652Z",
-      "important": true,
+      "important": false,
       "id": 6
     },
     {
@@ -45,8 +45,14 @@
     {
       "content": "alter",
       "date": "2024-01-02T11:03:23.359Z",
-      "important": true,
+      "important": false,
       "id": 8
+    },
+    {
+      "content": "some note",
+      "date": "2024-01-02T19:14:37.514Z",
+      "important": true,
+      "id": 9
     }
   ]
 }

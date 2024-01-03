@@ -2,21 +2,24 @@ import { useState, useEffect } from 'react'
 import Contacts from "./Contacts.js"
 import NewPerson from "./NewPerson.js"
 import Input from "./Input.js"
-import axios from "axios"
+import personsService from "../services/personsService"
 
 const App = () => {
   const [persons, setPersons] = useState([])
-  const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber] = useState('')
+  const [newName, setNewName] = useState("")
+  const [newNumber, setNewNumber] = useState("")
   const [showingFilter, setFilter] = useState("")
 
   useEffect(()=>{
-    axios
-      .get("http://localhost:3001/persons")
-      .then((response)=>{
-        setPersons(response.data)
-      })
+    personsService.getAll()
+      .then(personsList => setPersons(personsList))
+      .catch(error => alert('Error we can retrive data from server'))
   },[])
+
+  let resetInputs = () => {
+    setNewName("")
+    setNewNumber("")
+  }
 
   let showingPersons = showingFilter
     ? persons.filter(person => person.name.toLowerCase().startsWith(showingFilter.toLowerCase()))
@@ -24,14 +27,31 @@ const App = () => {
 
   let addNewName = (e) => {
     e.preventDefault()
-    if (persons.filter(person => person.name === newName).length > 0) {
-      alert(`${newName} alaready exist in phonebook.`)
+    let toUpdate = persons.filter(person => person.name === newName)
+    if (toUpdate.length > 0) {
+      toUpdate = {...toUpdate[0], number: newNumber}
+      if (window.confirm(`${newName} alaready exist on phonebook,
+        replace the old number with a new one?`)){
+        personsService.updatePerson(toUpdate)
+          .then(updated => setPersons(persons.filter(prsn => prsn.id != updated.id).concat(updated)))
+          .catch(error => alert("Cant update."))
+        resetInputs()
+      }
     } else {
-      setPersons([...persons].concat({ name: newName, number: newNumber }))
-      setNewName("")
-      setNewNumber("")
+      personsService.createNew({ name: newName, number: newNumber })
+        .then(created => setPersons([...persons].concat(created)))
+        .catch(error => alert(`${newName} cannot be saved, try again later`))
+      resetInputs()
     }
   }
+
+  let deletePerson = (idToDelete) => {
+    let deleting = persons.filter(prsn => prsn.id == idToDelete)[0]
+    if (window.confirm(`Sure to delete ${deleting.name}?.`)){
+      personsService.deletePerson(idToDelete)
+        .then(deleted => setPersons(persons.filter(prsn => prsn.id != idToDelete)))
+      }
+    }
 
   return (
     <div>
@@ -40,7 +60,7 @@ const App = () => {
       <h2>Add new contact</h2>
         <NewPerson onChangeName={setNewName} name={newName} onChangeNumber={setNewNumber} number={newNumber} onClick={addNewName}/>
       <h2>Numbers</h2>
-      <Contacts contacts={showingPersons} />
+      <Contacts contacts={showingPersons} deletePerson={deletePerson} />
     </div>
   )
 }
