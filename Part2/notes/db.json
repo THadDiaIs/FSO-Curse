@@ -51,8 +51,14 @@
     {
       "content": "some note",
       "date": "2024-01-02T19:14:37.514Z",
-      "important": true,
+      "important": false,
       "id": 9
+    },
+    {
+      "content": "asdsdsfsd",
+      "date": "2024-01-03T21:23:00.378Z",
+      "important": false,
+      "id": 10
     }
   ]
 }
