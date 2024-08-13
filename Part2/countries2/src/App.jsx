@@ -42,10 +42,13 @@ function App() {
         <h3>Imput a filter for the countries to show</h3>
         <input placeholder='type a country name' type='text' value={name} onInput={(e) => filterCountriesList(e.target.value)}/>
 
-        {countriesList &&
+        {
+          countriesList &&
           <CountriesList showingCountries={showingCountries} onclick={newName => {filterCountriesList(newName)}}/>
         }
-        {weather.request && <Weather weather={weather}/>}
+        {
+          weather.request && <Weather weather={weather}/>
+        }
     </>
   )
 }
